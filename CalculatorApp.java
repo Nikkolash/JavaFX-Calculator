@@ -46,6 +46,7 @@ public class CalculatorApp extends Application {
 	Button btMultiply = new Button("*");
 	Button btDivide = new Button("/");
 	Button btClear = new Button("C");
+	Button btExponent = new Button("^");
 	
 	ArrayList<Button> buttonList = new ArrayList<>();
 	ArrayList<HBox> hboxList = new ArrayList<>();
@@ -68,7 +69,7 @@ public class CalculatorApp extends Application {
 		hboxTwo.getChildren().addAll(btOne,btTwo,btThree,btSubtract);
 		hboxThree.getChildren().addAll(btFour,btFive,btSix,btMultiply);
 		hboxFour.getChildren().addAll(btSeven,btEight,btNine,btDivide);
-		hboxFive.getChildren().addAll(btClear);
+		hboxFive.getChildren().addAll(btClear,btExponent);
 		hboxDisplay.getChildren().add(tfDisplay);
 
 		setProperties();
@@ -110,6 +111,9 @@ public class CalculatorApp extends Application {
 					processOperators(e);
 				});
 				btDivide.setOnAction(e ->{
+					processOperators(e);
+				});
+				btExponent.setOnAction(e ->{
 					processOperators(e);
 				});
 				btCalculate.setOnAction(e ->{
@@ -176,6 +180,7 @@ public class CalculatorApp extends Application {
 		buttonList.add(btMultiply);
 		buttonList.add(btDivide);
 		buttonList.add(btClear);
+		buttonList.add(btExponent);
 		for(Button button : buttonList) {
 			button.setPrefWidth(50);
 			button.setPrefHeight(200);
@@ -220,6 +225,10 @@ public class CalculatorApp extends Application {
 			if(number2 == 0)
 				return 0;
 			return number1 / number2;
+		case "^":
+			for(int counter = 0; counter < number2; counter++) {
+				return number1 * number1;
+			}
 		default:
 			break;
 		}
