@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -24,6 +25,7 @@ public class CalculatorApp extends Application {
 	HBox hboxTwo = new HBox();
 	HBox hboxThree = new HBox();
 	HBox hboxFour = new HBox();
+	HBox hboxFive = new HBox();
 	HBox hboxDisplay = new HBox();
 
 	TextField tfDisplay = new TextField();
@@ -43,7 +45,8 @@ public class CalculatorApp extends Application {
 	Button btSubtract = new Button("-");
 	Button btMultiply = new Button("*");
 	Button btDivide = new Button("/");
-
+	Button btClear = new Button("C");
+	
 	ArrayList<Button> buttonList = new ArrayList<>();
 	ArrayList<HBox> hboxList = new ArrayList<>();
 	ArrayList<Button> numpadList = new ArrayList<>();
@@ -57,13 +60,15 @@ public class CalculatorApp extends Application {
 	private Parent createContent() {
 		stackPane.setPrefSize(250,300);		
 		root.setPrefSize(250,300);
-
-		root.getChildren().addAll(stackPane,hboxDisplay,hboxFour,hboxThree,hboxTwo,hboxOne);
+		
+		root.setStyle("-fx-background-color: rgba(0,0,0,0.3)");
+		root.getChildren().addAll(stackPane,hboxDisplay,hboxFive,hboxFour,hboxThree,hboxTwo,hboxOne);
 
 		hboxOne.getChildren().addAll(btZero,btCalculate,btAdd);
 		hboxTwo.getChildren().addAll(btOne,btTwo,btThree,btSubtract);
 		hboxThree.getChildren().addAll(btFour,btFive,btSix,btMultiply);
 		hboxFour.getChildren().addAll(btSeven,btEight,btNine,btDivide);
+		hboxFive.getChildren().addAll(btClear);
 		hboxDisplay.getChildren().add(tfDisplay);
 
 		setProperties();
@@ -112,7 +117,9 @@ public class CalculatorApp extends Application {
 				});
 				btZero.setOnAction(e ->{
 					processDisplay(e);			
-		
+				});
+				btClear.setOnAction(e ->{
+					tfDisplay.setText("");
 				});
 
 		return root;
@@ -168,6 +175,7 @@ public class CalculatorApp extends Application {
 		buttonList.add(btSubtract);
 		buttonList.add(btMultiply);
 		buttonList.add(btDivide);
+		buttonList.add(btClear);
 		for(Button button : buttonList) {
 			button.setPrefWidth(50);
 			button.setPrefHeight(200);
@@ -177,6 +185,7 @@ public class CalculatorApp extends Application {
 		hboxList.add(hboxTwo);
 		hboxList.add(hboxThree);
 		hboxList.add(hboxFour);
+		hboxList.add(hboxFive);
 
 		for(HBox hbox : hboxList) {
 			hbox.setPrefHeight(300);
@@ -185,7 +194,7 @@ public class CalculatorApp extends Application {
 			hbox.setSpacing(10);
 			hbox.setAlignment(Pos.CENTER);
 		}
-
+		
 		btZero.setPrefWidth(110);
 		btZero.setPrefHeight(200);	
 		hboxDisplay.setAlignment(Pos.CENTER);
@@ -194,7 +203,8 @@ public class CalculatorApp extends Application {
 		hboxDisplay.setPrefWidth(230);
 		tfDisplay.setPrefWidth(230);
 		tfDisplay.setPrefHeight(350);
-		tfDisplay.setEditable(false);	
+		tfDisplay.setEditable(false);
+		tfDisplay.setFont(Font.font(24));
 	}
 
 	//Calculate method
@@ -203,7 +213,7 @@ public class CalculatorApp extends Application {
 		case "+":
 			return number1 + number2;
 		case "-":
-			return number1-number2;
+			return number1 - number2;
 		case "*":
 			return number1 * number2;
 		case "/":
