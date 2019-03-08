@@ -49,7 +49,11 @@ public class CalculatorApp extends Application {
 	ArrayList<Button> numpadList = new ArrayList<>();
 	
 	private Text output;
-	
+	private long number2 = 0;
+	private long number1 = 0;
+	private String operator = "";
+	private boolean start = true;
+
 	private Parent createContent() {
 		stackPane.setPrefSize(250,300);		
 		root.setPrefSize(250,300);
@@ -63,59 +67,88 @@ public class CalculatorApp extends Application {
 		hboxDisplay.getChildren().add(tfDisplay);
 
 		setProperties();
+
+				btOne.setOnAction(e ->{
+					processDisplay(e);		
+				});
+				btTwo.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btThree.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btFour.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btFive.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btSix.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btSeven.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btEight.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btNine.setOnAction(e ->{
+					processDisplay(e);
+				});
+				btAdd.setOnAction(e ->{
+					processOperators(e);
+				});
+				btSubtract.setOnAction(e ->{
+					processOperators(e);
+				});
+				btMultiply.setOnAction(e ->{
+					processOperators(e);
+				});
+				btDivide.setOnAction(e ->{
+					processOperators(e);
+				});
+				btCalculate.setOnAction(e ->{
+					processOperators(e);
+				});
+				btZero.setOnAction(e ->{
+					processDisplay(e);			
 		
-		btOne.setOnAction(e ->{
-			processDisplay(e);		
-		});
-		btTwo.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btThree.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btFour.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btFive.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btSix.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btSeven.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btEight.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btNine.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btAdd.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btSubtract.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btMultiply.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btDivide.setOnAction(e ->{
-			processDisplay(e);
-		});
-		btCalculate.setOnAction(e ->{
-			
-		});
-		btZero.setOnAction(e ->{
-			processDisplay(e);			
-						
-		});
+				});
+
 		return root;
 	}
-	
+
 	private void processDisplay(ActionEvent event) {
+		if(start) {
+			tfDisplay.setText("");
+			start = false;
+		}
 		String value = ((Button)event.getSource()).getText();
 		tfDisplay.setText(tfDisplay.getText() + value);
+	}
+
+	private void processOperators(ActionEvent event) {
+		String value = ((Button)event.getSource()).getText();
+
+		if(!value.equals("=")) {
+			if(!operator.isEmpty()) 
+				return;	
+
+			operator = value;
+			number1 = Long.parseLong(tfDisplay.getText());
+			tfDisplay.setText("");
+
+		} else {
+			if(operator.isEmpty())
+
+				return;
+
+			number2 = Long.parseLong(tfDisplay.getText());
+			float output = calculate(number1,number2,operator);
+			tfDisplay.setText(String.valueOf(output));
+			operator = "";
+			start = true;
+		}
 	}
 
 	//Set Properties for Nodes
@@ -163,7 +196,7 @@ public class CalculatorApp extends Application {
 		tfDisplay.setPrefHeight(350);
 		tfDisplay.setEditable(false);	
 	}
-	
+
 	//Calculate method
 	public float calculate(long number1, long number2, String operator) {
 		switch(operator) {
@@ -194,5 +227,5 @@ public class CalculatorApp extends Application {
 		launch(args);
 	}
 
-	
+
 }
